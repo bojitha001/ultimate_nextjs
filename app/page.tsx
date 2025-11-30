@@ -1,9 +1,10 @@
 const page = () => {
   return (
     <div>
-      <h1></h1>
+      <h1 className="h1-bold">Hi</h1>
+      <h1 className="h1-bold font-space-grotesk">Hi</h1>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
