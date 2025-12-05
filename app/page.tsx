@@ -1,4 +1,6 @@
+"use client";
 const page = () => {
+  console.log("HI");
   return (
     <div>
       <h1 className="h1-bold">Hi</h1>
