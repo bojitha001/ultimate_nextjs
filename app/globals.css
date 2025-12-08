@@ -45,6 +45,10 @@
 
   --font-inter: var(--font-inter);
   --font-space-grotesk: var(--font-space-grotesk);
+
+  --background-image-auth-dark: url("/images/auth-dark.png");
+  /*noinspection CssUnknownTarget*/
+  --background-image-auth-light: url("/images/auth-light.png");
 }
 
 /*
@@ -325,6 +329,14 @@
 
 @utility tab {
   @apply dark:bg-dark-400! bg-light-800! text-light-500! dark:data-[state=active]:bg-dark-300! data-[state=active]:bg-primary-100! data-[state=active]:text-primary-500! min-h-full!;
+}
+
+@utility bg-auth-dark {
+  background-image: var(--background-image-auth-dark);
+}
+
+@utility bg-auth-light {
+  background-image: var(--background-image-auth-light);
 }
 
 @layer base {
