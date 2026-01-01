@@ -1,5 +1,4 @@
 import ROUTES from "@/constants/routes";
-import { name } from "assert";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { getDeviconsClassName } from "@/lib/utils";
@@ -7,7 +6,7 @@ import { getDeviconsClassName } from "@/lib/utils";
 interface Props {
   _id: string;
   name: string;
-  questions: string;
+  questions?: string;
   showCoun?: boolean;
   compact?: boolean;
 }
