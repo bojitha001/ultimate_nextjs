@@ -8,6 +8,8 @@ import { Button } from "../ui/button";
 import { useRef } from "react";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import dynamic from "next/dynamic";
+import z, { file } from "zod";
+import TagCard from "../cards/TagCard";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
@@ -17,7 +19,7 @@ const Editor = dynamic(() => import("@/components/editor"), {
 
 const QuestionForm = () => {
   const editorRef = useRef<MDXEditorMethods>(null);
-  const form = useForm({
+  const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
       title: "",
@@ -26,22 +28,46 @@ const QuestionForm = () => {
     },
   });
 
-  const handlecreatequestion = (data: any) => {
+  const handlecreatequestion = (data: z.infer<typeof AskQuestionSchema>) => {
     console.log(data);
   };
 
-  //   const handleKeyInputDown = (e: React.KeyboardEvent<HTMLInputElement>, field: { value: string[] }) => {
-  //     if (e.key === "Enter") {
-  //       e.preventDefault();
-  //       const tagInput = e.currentTarget.value.trim();
+  const handleKeyInputDown = (e: React.KeyboardEvent<HTMLInputElement>, field: { value: string[] }) => {
+    console.log(field, e);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const tagInput = e.currentTarget.value.trim();
 
-  //       if (tagInput && tagInput.length < 15 && !field.value.includes(tagInput)) {
-  //         form.setValue("tags", [...field.value, tagInput]); // Add the new tag to the form state
-  //         e.currentTarget.value = "";
-  //         form.clearErrors("tags");
-  //       }
-  //     }
-  //   };
+      if (tagInput && tagInput.length < 15 && !field.value.includes(tagInput)) {
+        form.setValue("tags", [...field.value, tagInput]); // Add the new tag to the form state
+        e.currentTarget.value = "";
+        form.clearErrors("tags");
+      } else if (tagInput.length > 15) {
+        form.setError("tags", { type: "manual", message: "Tag must be less than 15 characters" });
+      } else if (field.value.includes(tagInput)) {
+        form.setError("tags", { type: "manual", message: "Tag already added" });
+      }
+    }
+  };
+
+  const handleTagRemove = (tag: string, field: { value: string[] }) => {
+    /* Before: ["javascript", "react", "nextjs"]
+    Remove: "react"
+
+    filter((t) => t !== "react")
+        "javascript" !== "react" ✅ keep
+        "react"      !== "react" ❌ remove
+         "nextjs"     !== "react" ✅ keep
+
+    After: ["javascript", "nextjs"] */
+
+    const newTags = field.value.filter((t) => t !== tag); // Remove the tag from the form state
+    form.setValue("tags", newTags);
+
+    if (newTags.length === 0) {
+      form.setError("tags", { type: "manual", message: "Please add at least one tag" });
+    }
+  };
 
   return (
     <Form {...form}>
@@ -98,11 +124,26 @@ const QuestionForm = () => {
                   <Input
                     placeholder="Add tags..."
                     required
-                    {...field}
+                    // {...field}
                     className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
                     onKeyDown={(e) => handleKeyInputDown(e, field)}
                   />
-                  Tags
+
+                  {field.value.length > 0 && (
+                    <div className="flex-start mt-2.5 flex-wrap gap-2.5">
+                      {field?.value?.map((tag: string) => (
+                        <TagCard
+                          key={tag}
+                          _id={tag}
+                          name={tag}
+                          compact
+                          remove
+                          isButton
+                          handleRemove={() => handleTagRemove(tag, field)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
