@@ -27,7 +27,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
 
       <div className="mt-3.5 flex w-full flex-wrap">
         {tags.map((tag) => (
-          <TagCard key={tag._id} _id={tag._id} name={tag.name} />
+          <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
       </div>
 
@@ -35,7 +35,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
         <Metric
           imgUrl={author.image}
           alt={author.name}
-          value={author.name}
+          value={author.value}
           title={`asked ${getTimestamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
           textStyles="body-medium text-dark400_light700"

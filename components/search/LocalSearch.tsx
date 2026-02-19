@@ -13,10 +13,10 @@ interface Props {
 }
 
 const LocalSearch = ({ route, imgSrc, placeholder, otherClasses }: Props) => {
-  const pathname = usePathname();
+  const pathname = usePathname(); // Get the current pathname
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // Get the current search parameters
   const query = searchParams.get("query") || "";
 
   const [searchQuery, setSearchQuery] = useState(query);
@@ -25,8 +25,8 @@ const LocalSearch = ({ route, imgSrc, placeholder, otherClasses }: Props) => {
 
   useEffect(() => {
     const delayDebuounceFn = setTimeout(() => {
-      if (previousSearchRef.current === searchQuery) return;
-      previousSearchRef.current = searchQuery;
+      if (previousSearchRef.current === searchQuery) return; // If the search query hasn't changed, do nothing
+      previousSearchRef.current = searchQuery; // Update the previous search query
 
       if (searchQuery) {
         const newUrl = formUrlQuery({ params: searchParams.toString(), key: "query", value: searchQuery });

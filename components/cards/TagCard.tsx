@@ -7,11 +7,11 @@ interface Props {
   _id: string;
   name: string;
   questions?: string;
-  showCoun?: boolean;
+  showCount?: boolean;
   compact?: boolean;
 }
 
-const TagCard = ({ _id, name, questions, showCount, compact }) => {
+const TagCard = ({ _id, name, questions, showCount, compact }: Props) => {
   const iconsClass = getDeviconsClassName(name);
   return (
     <Link href={ROUTES.TAGS(_id)} className="flex justify-between gap-2">

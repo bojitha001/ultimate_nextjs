@@ -25,6 +25,7 @@ const HomeFilter = () => {
     let newUrl = "";
 
     if (filter === active) {
+      // If the clicked filter is already active, we want to remove it from the URL
       setActive("");
 
       newUrl = removeKeysFromQuery({

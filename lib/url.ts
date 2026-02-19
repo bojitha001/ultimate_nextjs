@@ -11,11 +11,12 @@ interface RemoveUrlQueryParams {
 }
 
 export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
-  const queryString = qs.parse(params);
+  const queryString = qs.parse(params); // Convert the query string into an object
 
-  queryString[key] = value;
+  queryString[key] = value; // Update the specific key with the new value
 
   const url = qs.stringifyUrl({
+    // Convert the updated query object back into a query string and construct the full URL
     url: window.location.pathname,
     query: queryString,
   });

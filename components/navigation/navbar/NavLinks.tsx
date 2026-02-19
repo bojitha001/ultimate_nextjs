@@ -8,7 +8,8 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
-  const pathname = usePathname();
+  const pathname = usePathname(); // Get the current pathname to determine active link
+  console.log("Current pathname:", pathname); // Debugging log
   const userId = 1;
 
   return (
