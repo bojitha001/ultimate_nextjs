@@ -47,6 +47,6 @@ const UserSchema = new Schema(
   { timestamps: true } // automatically adds createdAt and updatedAt fields
 );
 
-const User = models?.user || model<IUser>("User", UserSchema); // checks if model already exists to prevent recompilation errors in development
+const User = models?.User || model<IUser>("User", UserSchema); // checks if model already exists to prevent recompilation errors in development
 
 export default User;
