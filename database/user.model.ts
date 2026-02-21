@@ -5,12 +5,13 @@ export interface IUser {
   userName: string;
   email: string;
   bio?: string;
-  image: string;
+  image?: string;
   location?: string;
   portfolio?: string;
   reputation?: number;
 }
 
+export interface IUsereDoc extends IUser, Document {}
 const UserSchema = new Schema(
   {
     name: {

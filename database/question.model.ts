@@ -1,5 +1,4 @@
 import { model, models, Schema, Types } from "mongoose";
-import { title } from "process";
 
 export interface IQuestion {
   title: string;
@@ -12,6 +11,7 @@ export interface IQuestion {
   author: Types.ObjectId; // reference to User model
 }
 
+export interface IQuestionDoc extends IQuestion, Document {}
 const QuestionSchema = new Schema<IQuestion>(
   {
     title: {
