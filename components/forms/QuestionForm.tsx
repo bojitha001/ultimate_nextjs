@@ -13,8 +13,9 @@ import TagCard from "../cards/TagCard";
 
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import("@/components/editor"), {
+  // Dynamically import the Editor component
   // Make sure we turn SSR off
-  ssr: false,
+  ssr: false, // This is required to avoid hydration errors since the editor relies on browser-specific APIs
 });
 
 const QuestionForm = () => {
