@@ -53,6 +53,6 @@ const QuestionSchema = new Schema<IQuestion>(
   { timestamps: true }
 );
 
-const Question = models?.account || model<IQuestion>("Question", QuestionSchema);
+const Question = models?.question || model<IQuestion>("Question", QuestionSchema);
 
 export default Question;
